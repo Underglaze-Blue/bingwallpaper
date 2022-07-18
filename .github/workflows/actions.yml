@@ -1,0 +1,32 @@
+# This is a basic workflow to help you get started with Actions
+
+name: actions
+
+on:
+  schedule:
+    # 0 时区 0 点，北京时间 8 点
+    - cron: "0 0 * * *"
+    
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Install Deno
+        uses: denolib/setup-deno@master
+
+      - name: Deno Run
+        run: |
+          git config --local user.email "1176989591@qq.com"
+          git config --local user.name "Underglaze-Blue"
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }}
+          git pull --rebase
+          deno run --unstable --allow-net --allow-read --allow-write ts/index.ts
+          git add .
+          git commit -m "更新啦~"
+          git push
+
