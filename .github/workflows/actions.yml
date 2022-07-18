@@ -4,8 +4,8 @@ name: actions
 
 on:
   schedule:
-    # 0 时区 0 点，北京时间 8 点
-    - cron: "0 0 * * *"
+    # 6 点执行
+    - cron: "0 6 * * *"
     
     
 jobs:
