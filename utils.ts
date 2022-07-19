@@ -56,7 +56,7 @@ today: [${first.copyright}](${first.large})
 `
 
   data.forEach((item, index) => {
-      fragment += `| ![${item.title}](${item.preview})  ${item.date}  [download 4K](${item.large})`
+      fragment += `| ![${item.title}](${item.preview}) <br/> ${item.date}  [download 4K](${item.large})`
       if(index > 0 && index % 3 === 0) {
         fragment += `|
 `
