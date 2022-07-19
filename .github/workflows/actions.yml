@@ -4,8 +4,8 @@ name: actions
 
 on:
   schedule:
-    # 6 点执行
-    - cron: "0 7 * * *"
+    # 8 点执行 - 时区问题
+    - cron: "0 0 * * *"
     
     
 jobs:
