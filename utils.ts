@@ -45,7 +45,6 @@ function splicing(str: string, readme: string):string {
 function createReadme(data: Img[]): string {
   const [first]: Img[] = data.splice(0, 1)
   let str = `
----
 [![${first.copyright}](${first.medium})](${first.large})
 
 Today: [${first.copyright}](${first.large})
