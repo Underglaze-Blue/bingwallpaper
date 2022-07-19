@@ -48,7 +48,7 @@ function createReadme(data: Img[]): string {
 ---
 [![${first.copyright}](${first.medium})](${first.large})
 
-today: [${first.copyright}](${first.large})
+Today: [${first.copyright}](${first.large})
   `
 
   let fragment = `|      |      |      |
