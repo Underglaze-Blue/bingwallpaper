@@ -2,7 +2,7 @@ import {Response, Img, Image} from './types.ts'
 import {updateData} from './utils.ts'
 
 const BING_URL = 'https://cn.bing.com'
-const API_URL = `${BING_URL}/HPImageArchive.aspx?format=js&idx=0&n=1&nc=${+new Date()}&pid=hp&FORM=BEHPTB&uhd=1&uhdwidth=3840&uhdheight=2160`
+const API_URL = `${BING_URL}/HPImageArchive.aspx?format=js&idx=0&n=1&pid=hp&FORM=BEHPTB&uhd=1&uhdwidth=3840&uhdheight=2160`
 
 const large = '&pid=hp&w=3840&h=2160&rs=1&c=4'
 const medium = '&w=1000'
