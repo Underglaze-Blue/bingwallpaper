@@ -31,14 +31,23 @@ export async function updateData(img: Img): Promise<void> {
 
   readme = createReadme(resultData);
 
-  Deno.writeTextFile('./README.md', splicing('Bing Wallpaper', readme))
+  let history = `
+  
+  ## HISTORY
+  `
+  for await (const fileOrFolder of Deno.readDir("./archive")) {
+    console.log(fileOrFolder);
+    history += `[${fileOrFolder.name}](https://github.com/Underglaze-Blue/bingwallpaper/tree/main/archive/${fileOrFolder.name}/) 、`
+  }
+
+  Deno.writeTextFile('./README.md', splicing('Bing Wallpaper', readme, history))
   await ensureFileSync(`./archive/${month(1)}/README.md`)
-  Deno.writeTextFile(`./archive/${month(1)}/README.md`, splicing(month(1), readme))
+  Deno.writeTextFile(`./archive/${month(1)}/README.md`, splicing(month(1), readme, ''))
 }
 
 // 拼接
-function splicing(str: string, readme: string):string {
-  return `## ${str}` + readme
+function splicing(str: string, readme: string, other?: string):string {
+  return `## ${str}` + readme + other
 }
 
 // 创建 readme
