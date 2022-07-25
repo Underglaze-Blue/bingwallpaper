@@ -62,7 +62,10 @@ Today: [${first.copyright}](${first.large})
       }
   });
 
-  fragment += ' |'
+  if(data.length % 3 !== 0) {
+    fragment += ' |'
+  }
+
 
   return str + (data.length ? fragment : '')
 }
