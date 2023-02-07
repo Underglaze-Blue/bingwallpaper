@@ -5,7 +5,7 @@ import { ensureFileSync } from "https://deno.land/std/fs/mod.ts"
 function month(n: number): string {
   const _date: Date = new Date()
   let month: number = _date.getMonth() + n
-  return `${_date.getFullYear()}-${month}`
+  return `${_date.getFullYear()}-${String(month).padStart(2, '0')}`
 }
 
 // 更新数据及创建 readme 
