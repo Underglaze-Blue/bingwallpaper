@@ -35,10 +35,17 @@ export async function updateData(img: Img): Promise<void> {
   
   ## HISTORY
   `
+
+  // 这里是因为 deno 获取文件夹的顺序有问题，需要定义变量重新排序
+  const tempDir = []
+
   for await (const fileOrFolder of Deno.readDir("./archive")) {
-    console.log(fileOrFolder);
-    history += `[${fileOrFolder.name}](https://github.com/Underglaze-Blue/bingwallpaper/tree/main/archive/${fileOrFolder.name}/) 、`
+    tempDir.push(fileOrFolder.name)
   }
+  tempDir.sort().reverse()
+  tempDir.forEach(dirName => {
+    history += `[${dirName}](https://github.com/Underglaze-Blue/bingwallpaper/tree/main/archive/${dirName}/) 、`
+  })
 
   Deno.writeTextFile('./README.md', splicing('Bing Wallpaper', readme, history))
   await ensureFileSync(`./archive/${month(1)}/README.md`)
