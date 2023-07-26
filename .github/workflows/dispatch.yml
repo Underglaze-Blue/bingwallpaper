@@ -24,6 +24,7 @@ jobs:
           git config --local user.name "Underglaze-Blue"
           git remote set-url origin https://${{ github.actor }}:${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }}
           git pull --rebase
+          deno upgrade
           deno run --unstable --allow-net --allow-read --allow-write index.ts
           git add .
           git commit -m "更新啦~"
