@@ -5,6 +5,9 @@ import { ensureFileSync } from "https://deno.land/std/fs/mod.ts"
 function month(n: number): string {
   const _date: Date = new Date()
   let month: number = _date.getMonth() + n
+  if(month <= 0) {
+    return `${_date.getFullYear() - 1}-${String(12).padStart(2, '0')}`
+  }
   return `${_date.getFullYear()}-${String(month).padStart(2, '0')}`
 }
 
@@ -15,13 +18,28 @@ export async function updateData(img: Img): Promise<void> {
   data = await ensureFileSync(`./data/${month(1)}.json`)
   data = await Deno.readTextFile(`./data/${month(1)}.json`)
 
+  let prevData
+  prevData = await ensureFileSync(`./data/${month(0)}.json`)
+  prevData = await Deno.readTextFile(`./data/${month(0)}.json`)
+
   if(data) {
     data = JSON.parse(data)
+  } else {
+    data = []
+  }
+
+  if(prevData) {
+    prevData = JSON.parse(prevData)
+  }  else {
+    prevData = []
   }
 
   let resultData: Img[] = []
 
-  resultData.push(img)
+  if(!(data[0] && data[0].url == img.url)) {
+    resultData.push(img)
+  }
+
 
   resultData = resultData.concat(data || [])
 
@@ -30,6 +48,16 @@ export async function updateData(img: Img): Promise<void> {
   let readme: string = ''
 
   readme = createReadme(resultData);
+
+  let mainReadme = readme
+
+  if(resultData.length % 31 > 0 && prevData.length) {
+    let sliceLength = 31 - resultData.length
+    let tempData = prevData.slice(0, sliceLength)
+    console.log(tempData)
+    resultData = resultData.concat(tempData)
+    mainReadme = createReadme(resultData);
+  }
 
   let history = `
   
@@ -47,7 +75,7 @@ export async function updateData(img: Img): Promise<void> {
     history += `[${dirName}](https://github.com/Underglaze-Blue/bingwallpaper/tree/main/archive/${dirName}/) 、`
   })
 
-  Deno.writeTextFile('./README.md', splicing('Bing Wallpaper', readme, history))
+  Deno.writeTextFile('./README.md', splicing('Bing Wallpaper', mainReadme, history))
   await ensureFileSync(`./archive/${month(1)}/README.md`)
   Deno.writeTextFile(`./archive/${month(1)}/README.md`, splicing(month(1), readme, ''))
 }
