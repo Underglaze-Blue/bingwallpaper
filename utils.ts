@@ -51,10 +51,10 @@ export async function updateData(img: Img): Promise<void> {
 
   let mainReadme = readme
 
+  // 主页补全
   if(resultData.length % 31 > 0 && prevData.length) {
     let sliceLength = 31 - resultData.length
     let tempData = prevData.slice(0, sliceLength)
-    console.log(tempData)
     resultData = resultData.concat(tempData)
     mainReadme = createReadme(resultData);
   }
@@ -71,8 +71,9 @@ export async function updateData(img: Img): Promise<void> {
     tempDir.push(fileOrFolder.name)
   }
   tempDir.sort().reverse()
-  tempDir.forEach(dirName => {
-    history += `[${dirName}](https://github.com/Underglaze-Blue/bingwallpaper/tree/main/archive/${dirName}/) 、`
+  tempDir.forEach((dirName, index) => {
+    let suffix = index < tempDir.length - 1 ? '、' : ''
+    history += `[${dirName}](https://github.com/Underglaze-Blue/bingwallpaper/tree/main/archive/${dirName}/) ${suffix}`
   })
 
   Deno.writeTextFile('./README.md', splicing('Bing Wallpaper', mainReadme, history))
