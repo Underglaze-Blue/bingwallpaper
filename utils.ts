@@ -49,7 +49,7 @@ export async function updateData(img: Img): Promise<void> {
   let mainReadme = readme
 
   // 主页补全
-  if(resultData.length % 31 > 0 && prevData.length) {
+  if(resultData.length < 31 && prevData.length) {
     let sliceLength = 31 - resultData.length
     let tempData = prevData.slice(0, sliceLength)
     resultData = resultData.concat(tempData)
