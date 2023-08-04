@@ -36,11 +36,7 @@ export async function updateData(img: Img): Promise<void> {
 
   let resultData: Img[] = []
 
-  if(data[0] && data[0].url == img.url) {
-  } else {
-    resultData.push(img)
-  }
-
+  resultData.push(img)
 
   resultData = resultData.concat(data || [])
 
