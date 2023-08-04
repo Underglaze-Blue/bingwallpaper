@@ -36,7 +36,9 @@ export async function updateData(img: Img): Promise<void> {
 
   let resultData: Img[] = []
 
-  resultData.push(img)
+  if(!(data[0] && data[0].url == img.url)) {
+    resultData.push(img)
+  }
 
   resultData = resultData.concat(data || [])
 
@@ -52,7 +54,8 @@ export async function updateData(img: Img): Promise<void> {
   if(resultData.length < 31 && prevData.length) {
     let sliceLength = 31 - resultData.length
     let tempData = prevData.slice(0, sliceLength)
-    resultData = resultData.concat(tempData)
+    // 创建每个月的 readme 时，通过 splice 会删除第一项，这里需要补充进去
+    resultData = resultData.concat([img], tempData)
     mainReadme = createReadme(resultData);
   }
 
