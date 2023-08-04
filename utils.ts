@@ -22,6 +22,8 @@ export async function updateData(img: Img): Promise<void> {
   prevData = await ensureFileSync(`./data/${month(0)}.json`)
   prevData = await Deno.readTextFile(`./data/${month(0)}.json`)
 
+  let flag = false
+
   if(data) {
     data = JSON.parse(data)
   } else {
@@ -38,6 +40,7 @@ export async function updateData(img: Img): Promise<void> {
 
   if(!(data[0] && data[0].url == img.url)) {
     resultData.push(img)
+    flag = true
   }
 
   resultData = resultData.concat(data || [])
@@ -51,11 +54,12 @@ export async function updateData(img: Img): Promise<void> {
   let mainReadme = readme
 
   // 主页补全
-  if(resultData.length < 31 && prevData.length) {
-    let sliceLength = 31 - resultData.length
-    let tempData = prevData.slice(0, sliceLength)
+  if(resultData.length < 30 && prevData.length) {
+    const sliceLength = 30 - resultData.length
+    const tempData = prevData.slice(0, sliceLength)
     // 创建每个月的 readme 时，通过 splice 会删除第一项，这里需要补充进去
-    resultData = [img].concat(resultData, tempData)
+    const temp = flag ? [img] : []
+    resultData = temp.concat(resultData, tempData)
     mainReadme = createReadme(resultData);
   }
 
